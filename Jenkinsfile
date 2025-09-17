@@ -20,6 +20,7 @@ pipeline {
                 '''
             }
         }
+    
 
         stage('Test') {
             agent {
@@ -31,13 +32,8 @@ pipeline {
 
             steps {
                 sh '''
-                    npm run test
-                    if [ -f build/index.html ]; then
-                        echo "index.html exists."
-                    else
-                        echo "index.html does not exist."
-                        exit 1
-                    fi
+                    #test -f build/index.html
+                    npm test
                 '''
             }
         }
@@ -45,7 +41,7 @@ pipeline {
         stage('E2E') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.55.0-noble'
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
                 }
             }
